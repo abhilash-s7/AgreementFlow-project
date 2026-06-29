@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: agreementflow
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: AGREEMENTFLOW_DB_PATH
+        value: /var/data/database.db
+    disk:
+      name: agreementflow-data
+      mountPath: /var/data
+      sizeGB: 1
+
